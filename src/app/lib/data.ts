@@ -72,7 +72,7 @@ export const campaigns: Campaign[] = [
   { id: 5, name: "Lookalike Prospecting",       platform: "Meta",   status: "Active", monthlyBudget: 8000,  spend: 7320,  roas: 2.6, ctr: 2.1, cpc: 0.87, clicks: 8414,  impressions: 400666, startDate: "Jun 5" },
   { id: 6, name: "Shopping — Q3 Catalog",       platform: "Google", status: "Active", monthlyBudget: 9000,  spend: 4210,  roas: 4.9, ctr: 2.5, cpc: 0.71, clicks: 5930,  impressions: 237200, startDate: "Jun 15" },
   { id: 7, name: "Video Views — Awareness",     platform: "Meta",   status: "Paused", monthlyBudget: 5000,  spend: 980,   roas: 0.9, ctr: 0.8, cpc: 0.42, clicks: 2333,  impressions: 291625, startDate: "Jun 20" },
-  { id: 8, name: "Competitor Conquest",         platform: "Google", status: "Active", monthlyBudget: 7000,  spend: 6640,  roas: 2.2, ctr: 1.6, cpc: 1.94, clicks: 3423,  impressions: 213938, startDate: "Jun 8" },
+  { id: 8, name: "Competitor Conquest",         platform: "Google", status: "Active", monthlyBudget: 7000,  spend: 6900,  roas: 2.2, ctr: 1.6, cpc: 1.94, clicks: 3423,  impressions: 213938, startDate: "Jun 8" },
 ];
 
 export const navItems = [
