@@ -25,6 +25,7 @@ dist/
 Thumbs.db
 .vscode/
 .idea/
+.vercel/
 
 # OS files
 *.swp
@@ -37,7 +38,6 @@ Thumbs.db
 
 # Dependency directories
 .pnpm-debug.log
-pnpm-lock.yaml
 
 # Optional npm cache
 .npm/
