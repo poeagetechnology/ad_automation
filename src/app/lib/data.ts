@@ -1,6 +1,7 @@
 import {
   LayoutDashboard, Megaphone, Users, Zap, Gauge, BarChart3,
   Shield, Cpu, Workflow, Clock3, Eye, Wallet,
+  PieChart, Image, FlaskConical, Plug, UsersRound, BellRing, CreditCard, Settings,
 } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -75,13 +76,187 @@ export const campaigns: Campaign[] = [
   { id: 8, name: "Competitor Conquest",         platform: "Google", status: "Active", monthlyBudget: 7000,  spend: 6900,  roas: 2.2, ctr: 1.6, cpc: 1.94, clicks: 3423,  impressions: 213938, startDate: "Jun 8" },
 ];
 
-export const navItems = [
-  { icon: LayoutDashboard, label: "Dashboard",         badge: null },
-  { icon: Megaphone,       label: "Campaign Manager",  badge: String(campaigns.length) },
-  { icon: Users,           label: "Lead CRM",          badge: String(leads.length) },
-  { icon: Zap,             label: "Automation Rules",  badge: String(autoRules.length) },
-  { icon: Gauge,           label: "Budget Pacer",      badge: null },
-  { icon: BarChart3,       label: "Analytics Reports", badge: null },
+// ─── Audience Insights ────────────────────────────────────────────────────────
+
+export interface AudienceSegment {
+  id: number; name: string; platform: Platform; size: number;
+  ctr: number; cpc: number; convRate: number; trend: "up" | "down";
+}
+
+export const audienceSegments: AudienceSegment[] = [
+  { id: 1, name: "Lookalike 1% — Purchasers",         platform: "Meta",   size: 1200000, ctr: 2.9, cpc: 0.81, convRate: 5.2, trend: "up"   },
+  { id: 2, name: "Retargeting — Cart Abandoners",     platform: "Meta",   size: 84000,   ctr: 3.6, cpc: 1.12, convRate: 8.9, trend: "up"   },
+  { id: 3, name: "In-Market — Business Software",     platform: "Google", size: 410000,  ctr: 2.1, cpc: 1.45, convRate: 4.1, trend: "down" },
+  { id: 4, name: "Custom Audience — Newsletter",      platform: "Meta",   size: 32000,   ctr: 4.2, cpc: 0.65, convRate: 9.7, trend: "up"   },
+  { id: 5, name: "Similar Audiences — Google",        platform: "Google", size: 960000,  ctr: 1.8, cpc: 1.02, convRate: 3.4, trend: "down" },
+];
+
+export const ageGroups = [
+  { label: "18–24", pct: 12 },
+  { label: "25–34", pct: 34 },
+  { label: "35–44", pct: 28 },
+  { label: "45–54", pct: 16 },
+  { label: "55+",   pct: 10 },
+];
+
+export const genderSplit = [
+  { label: "Female", pct: 54 },
+  { label: "Male",   pct: 44 },
+  { label: "Other",  pct: 2  },
+];
+
+export const deviceSplit = [
+  { label: "Mobile",  pct: 68 },
+  { label: "Desktop", pct: 27 },
+  { label: "Tablet",  pct: 5  },
+];
+
+export const funnelData = [
+  { stage: "Impressions", value: 2360000 },
+  { stage: "Clicks",      value: 49111   },
+  { stage: "Leads",       value: 1847    },
+  { stage: "Qualified",   value: 312     },
+  { stage: "Customers",   value: 84      },
+];
+
+// ─── Creative Studio ────────────────────────────────────────────────────────
+
+export type CreativeType = "Image" | "Video" | "Carousel";
+
+export interface Creative {
+  id: number; name: string; campaign: string; platform: Platform; type: CreativeType;
+  status: CampaignStatus; impressions: number; ctr: number; cpm: number; fatigue: number;
+}
+
+export const creatives: Creative[] = [
+  { id: 1, name: "Summer Sale — Hero Banner",        campaign: "Summer Sale — Meta",       platform: "Meta",   type: "Image",    status: "Active", impressions: 186400, ctr: 3.1, cpm: 8.20,  fatigue: 22 },
+  { id: 2, name: "Product Demo — 15s Cut",           campaign: "Brand Awareness — Google", platform: "Google", type: "Video",    status: "Active", impressions: 298200, ctr: 1.6, cpm: 11.40, fatigue: 64 },
+  { id: 3, name: "Retarget Carousel — Bestsellers",  campaign: "Retargeting — Meta",       platform: "Meta",   type: "Carousel", status: "Paused", impressions: 64200,  ctr: 1.1, cpm: 9.80,  fatigue: 81 },
+  { id: 4, name: "Search Ad — Lead Gen Copy A",       campaign: "Lead Gen — Search",        platform: "Google", type: "Image",    status: "Active", impressions: 142300, ctr: 3.4, cpm: 6.90,  fatigue: 18 },
+  { id: 5, name: "Lookalike Static — Testimonial",   campaign: "Lookalike Prospecting",    platform: "Meta",   type: "Image",    status: "Active", impressions: 210500, ctr: 2.4, cpm: 7.60,  fatigue: 37 },
+  { id: 6, name: "Catalog Video — Q3 Launch",        campaign: "Shopping — Q3 Catalog",    platform: "Google", type: "Video",    status: "Active", impressions: 98700,  ctr: 2.9, cpm: 9.10,  fatigue: 14 },
+];
+
+// ─── A/B Testing ────────────────────────────────────────────────────────────
+
+export type ExperimentStatus = "Running" | "Completed" | "Draft";
+
+export interface ExperimentVariant { name: string; visitors: number; conversions: number }
+
+export interface Experiment {
+  id: number; name: string; campaign: string; status: ExperimentStatus;
+  variantA: ExperimentVariant; variantB: ExperimentVariant; confidence: number; startDate: string;
+}
+
+export const experiments: Experiment[] = [
+  { id: 1, name: "Headline Test — Summer Sale", campaign: "Summer Sale — Meta",       status: "Running",   variantA: { name: "Control",        visitors: 12400, conversions: 436 }, variantB: { name: "Urgency Copy",   visitors: 12250, conversions: 512 }, confidence: 92, startDate: "Jun 20" },
+  { id: 2, name: "CTA Button Color",            campaign: "Lead Gen — Search",        status: "Completed", variantA: { name: "Blue Button",     visitors: 20100, conversions: 804 }, variantB: { name: "Orange Button",  visitors: 20050, conversions: 962 }, confidence: 98, startDate: "Jun 1"  },
+  { id: 3, name: "Landing Page Layout",         campaign: "Brand Awareness — Google", status: "Running",   variantA: { name: "Single Column",   visitors: 8300,  conversions: 249 }, variantB: { name: "Two Column",     visitors: 8180,  conversions: 238 }, confidence: 54, startDate: "Jun 28" },
+  { id: 4, name: "Video Thumbnail",             campaign: "Shopping — Q3 Catalog",    status: "Draft",     variantA: { name: "Product Shot",    visitors: 0,     conversions: 0   }, variantB: { name: "Lifestyle Shot", visitors: 0,     conversions: 0   }, confidence: 0,  startDate: "—"      },
+];
+
+// ─── Integrations ───────────────────────────────────────────────────────────
+
+export type IntegrationStatus = "Connected" | "Not Connected";
+
+export interface Integration {
+  id: number; name: string; category: string; status: IntegrationStatus; lastSync: string;
+}
+
+export const integrations: Integration[] = [
+  { id: 1, name: "Meta Ads",             category: "Advertising",   status: "Connected",     lastSync: "2m ago"  },
+  { id: 2, name: "Google Ads",           category: "Advertising",   status: "Connected",     lastSync: "5m ago"  },
+  { id: 3, name: "HubSpot CRM",          category: "CRM",           status: "Connected",     lastSync: "14m ago" },
+  { id: 4, name: "Slack",                category: "Notifications", status: "Connected",     lastSync: "1h ago"  },
+  { id: 5, name: "Zapier",               category: "Automation",    status: "Not Connected", lastSync: "—"       },
+  { id: 6, name: "Google Analytics 4",   category: "Analytics",     status: "Connected",     lastSync: "20m ago" },
+  { id: 7, name: "Salesforce",           category: "CRM",           status: "Not Connected", lastSync: "—"       },
+  { id: 8, name: "Shopify",              category: "Commerce",      status: "Not Connected", lastSync: "—"       },
+];
+
+// ─── Team & Roles ────────────────────────────────────────────────────────────
+
+export type TeamRole = "Admin" | "Editor" | "Viewer";
+export type TeamStatus = "Active" | "Invited";
+
+export interface TeamMember {
+  id: number; name: string; email: string; role: TeamRole; status: TeamStatus; lastActive: string;
+}
+
+export const teamMembers: TeamMember[] = [
+  { id: 1, name: "Alex Johnson", email: "alex@company.com",   role: "Admin",  status: "Active",  lastActive: "Now"        },
+  { id: 2, name: "Priya Shah",   email: "priya@company.com",  role: "Editor", status: "Active",  lastActive: "1h ago"     },
+  { id: 3, name: "Marcus Lee",   email: "marcus@company.com", role: "Editor", status: "Active",  lastActive: "3h ago"     },
+  { id: 4, name: "Dana Wright",  email: "dana@company.com",   role: "Viewer", status: "Active",  lastActive: "Yesterday" },
+  { id: 5, name: "Sam Okoro",    email: "sam@company.com",    role: "Viewer", status: "Invited",  lastActive: "—"         },
+];
+
+// ─── Notifications Center ────────────────────────────────────────────────────
+
+export type NotificationType = "budget" | "roas" | "lead" | "system";
+export type NotificationSeverity = "info" | "warning" | "critical";
+
+export interface AppNotification {
+  id: number; type: NotificationType; message: string; time: string;
+  read: boolean; severity: NotificationSeverity;
+}
+
+export const initialNotifications: AppNotification[] = [
+  { id: 1, type: "roas",   message: "Retargeting — Meta ROAS dropped below 1.5× threshold",                        time: "12m ago",   read: false, severity: "critical" },
+  { id: 2, type: "lead",   message: "47 new leads captured today — 12 marked high value",                          time: "1h ago",    read: false, severity: "info"     },
+  { id: 3, type: "budget", message: "Competitor Conquest is pacing 15% ahead of its monthly budget",                time: "2h ago",    read: false, severity: "warning"  },
+  { id: 4, type: "system", message: "Google Ads sync completed successfully",                                      time: "3h ago",    read: true,  severity: "info"     },
+  { id: 5, type: "budget", message: "Video Views — Awareness has spent only 20% of budget with 10 days left",       time: "5h ago",    read: true,  severity: "warning"  },
+  { id: 6, type: "system", message: "Weekly performance report generated",                                         time: "Yesterday", read: true,  severity: "info"     },
+  { id: 7, type: "lead",   message: "Marcus Webb marked as Qualified — $12,000 potential value",                    time: "Yesterday", read: true,  severity: "info"     },
+];
+
+// ─── Billing & Plan ──────────────────────────────────────────────────────────
+
+export const plan = {
+  name: "Enterprise", priceMonthly: 499, priceAnnual: 4790,
+  seatsUsed: 5, seatsTotal: 10, nextInvoice: "Aug 1, 2025",
+};
+
+export const usage = {
+  adSpendManaged: 284620, adSpendLimit: 500000,
+  apiCalls: 128400, apiCallsLimit: 250000,
+};
+
+export const invoices = [
+  { id: 1, date: "Jul 1, 2025", amount: "$499.00", status: "Paid" },
+  { id: 2, date: "Jun 1, 2025", amount: "$499.00", status: "Paid" },
+  { id: 3, date: "May 1, 2025", amount: "$499.00", status: "Paid" },
+  { id: 4, date: "Apr 1, 2025", amount: "$449.00", status: "Paid" },
+];
+
+// ─── Navigation ───────────────────────────────────────────────────────────────
+
+export const navSections = [
+  {
+    title: "Main Menu",
+    items: [
+      { icon: LayoutDashboard, label: "Dashboard",         badge: null },
+      { icon: Megaphone,       label: "Campaign Manager",  badge: String(campaigns.length) },
+      { icon: Users,           label: "Lead CRM",          badge: String(leads.length) },
+      { icon: Zap,             label: "Automation Rules",  badge: String(autoRules.length) },
+      { icon: Gauge,           label: "Budget Pacer",      badge: null },
+      { icon: BarChart3,       label: "Analytics Reports", badge: null },
+      { icon: PieChart,        label: "Audience Insights", badge: null },
+      { icon: Image,           label: "Creative Studio",   badge: String(creatives.length) },
+      { icon: FlaskConical,    label: "A/B Testing",       badge: String(experiments.filter(e => e.status === "Running").length) },
+    ],
+  },
+  {
+    title: "Workspace",
+    items: [
+      { icon: Plug,            label: "Integrations",         badge: String(integrations.filter(i => i.status === "Connected").length) },
+      { icon: UsersRound,      label: "Team & Roles",         badge: String(teamMembers.length) },
+      { icon: BellRing,        label: "Notifications Center", badge: null },
+      { icon: CreditCard,      label: "Billing & Plan",       badge: null },
+      { icon: Settings,        label: "Settings",             badge: null },
+    ],
+  },
 ];
 
 // ─── Config Maps ──────────────────────────────────────────────────────────────
